@@ -3,16 +3,27 @@ name: Telegram link notification
 on:
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send link to Telegram
-        uses: aps-m/telegram-notify-action@v1
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Read changelog for version 1.2.3
+        id: changelog
+        uses: aps-m/read_changelog_action@v5
+        with:
+          changelogfile: pre_release_changelog.md
+          tag: '1.2.3'
+
+      - name: Send changelog to Telegram
+        uses: aps-m/telegram-notify-action@v4
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           to: ${{ secrets.TELEGRAM_DEV_TO }}
-          parse_mode: MarkdownV2
-          message: '[ссылка](https://www.google.com/)'
+          parse_mode: Markdown
+          message: ${{ steps.changelog.outputs.content }}
