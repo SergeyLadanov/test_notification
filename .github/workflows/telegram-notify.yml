@@ -15,7 +15,7 @@ jobs:
 
       - name: Read changelog for version 1.2.3
         id: changelog
-        uses: aps-m/read_changelog_action@v5
+        uses: aps-m/read_changelog_action@issuse_link
         with:
           changelogfile: pre_release_changelog.md
           tag: '1.2.3'
