@@ -1,0 +1,18 @@
+name: Telegram link notification
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send link to Telegram
+        uses: aps-m/telegram-notify-action@v1
+        with:
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          to: ${{ secrets.TELEGRAM_DEV_TO }}
+          parse_mode: MarkdownV2
+          message: '[ссылка](https://www.google.com/)'
